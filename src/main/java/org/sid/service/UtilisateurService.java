@@ -6,9 +6,10 @@ import org.sid.entities.Utilisateur;
 
 public interface UtilisateurService {
 	List<Utilisateur> findAll();
-	void save(Utilisateur utilisateur);
+	Utilisateur save(Utilisateur utilisateur);
 	void update(Long id);
 	void delete(Long id);
 	Utilisateur findOne(Long id);
-
+	Utilisateur findUserByUsername(String username);
+	void addRoleToUser(String usename,String role);
 }
