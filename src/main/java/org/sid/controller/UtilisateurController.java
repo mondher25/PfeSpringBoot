@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.sid.dao.RoleRepository;
+import org.sid.entities.Profile;
 import org.sid.entities.Utilisateur;
+import org.sid.service.RoleService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +28,15 @@ public class UtilisateurController {
 	private UtilisateurService utilisateurService;
 	
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleService roleService;
+	
+	private Profile profile =new Profile();
 	
 	@PostMapping("/users")
 	public void save(@RequestBody Utilisateur utilisateur) {
 		utilisateur.setDateInscrit(new Date());
-		utilisateur.setRoles(Arrays.asList(roleRepository.findByRole("ROLE_USER")));
+		profile.setUtilisateur(utilisateur);
+ 		utilisateur.setRoles(Arrays.asList(roleService.findByRole("ROLE_USER")));
 		utilisateurService.save(utilisateur);
 	}
 	
@@ -40,6 +45,11 @@ public class UtilisateurController {
 		List<Utilisateur> listUsers = new ArrayList<>();
 		listUsers=utilisateurService.findAll();
 		return listUsers;
+	}
+	
+	@GetMapping("/user/{id}")
+	public Utilisateur findById(@PathVariable ("id") Long id) {			
+		return utilisateurService.findOne(id);
 	}
  
 	
