@@ -2,7 +2,6 @@ package org.sid.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.sid.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,20 +17,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UtilisateurService utilisateurService;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		 Utilisateur user=utilisateurService.findUserByUsername(username);
-		 if(user == null) {
-			 System.out.println("user not found with "+username);
-			 throw new UsernameNotFoundException("user not found with "+username);
-		 } 
-		 Collection<GrantedAuthority> authorities=new ArrayList<>();
-		 user.getRoles().forEach(r->{
-			 authorities.add(new SimpleGrantedAuthority(r.getRole()));
-		 });
-		 System.out.println("User with "+user.getUsername() +"not found");
-		return new User(user.getUsername(),user.getMdp(),authorities);
+		Utilisateur user = utilisateurService.findUserByUsername(username);
+		if (user == null) {
+			System.out.println("user not found with " + username);
+			throw new UsernameNotFoundException("Aucun Enregistrement trouvé Avec " + username);
+		}
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		user.getRoles().forEach(r -> {
+			authorities.add(new SimpleGrantedAuthority(r.getRole()));
+		});
+
+		return new User(user.getUsername(), user.getMdp(), authorities);
 	}
 
 }

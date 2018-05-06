@@ -55,6 +55,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			FilterChain chain,
 			Authentication authResult) 
 					throws IOException, ServletException {
+		
 		 User springUser=(User) authResult.getPrincipal();
 		 String jwt=Jwts.builder()
 				 .setSubject(springUser.getUsername())

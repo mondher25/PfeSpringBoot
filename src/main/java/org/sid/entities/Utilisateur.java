@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 @Entity
 public class Utilisateur implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 665659898877521L;
 	@Id
 	@GeneratedValue
 	private Long id;
