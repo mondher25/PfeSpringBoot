@@ -37,15 +37,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		 Utilisateur utilisateur =null;
 		 
 		 try {
-			 /* desérialize le donnee le objet JSON */
+			 /* objectmapper de jackson desérialize le donnee le objet JSON */
 			 utilisateur=new ObjectMapper().readValue(request.getInputStream(), Utilisateur.class);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		 System.out.println("********************************");
 		 System.out.println(" username   :"+utilisateur.getUsername());
-		 System.out.println("password :"+utilisateur.getMdp());
-		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(utilisateur.getUsername(), utilisateur.getMdp()));
+		 System.out.println("password :"+utilisateur.getPassword());
+		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(utilisateur.getUsername(), utilisateur.getPassword()));
 	}
 	
 	@Override
@@ -64,6 +64,5 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				 .claim("roles", springUser.getAuthorities())
 				 .compact();
 		 response.addHeader(SecurityContants.HEADER_STRING, SecurityContants.TOKEN_PREFIX+jwt);
-		super.successfulAuthentication(request, response, chain, authResult);
-	}
+ 	}
 }

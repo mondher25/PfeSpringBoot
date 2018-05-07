@@ -26,7 +26,7 @@ public class Utilisateur implements Serializable {
 	private Long id;
 	private String nom;
 	private String prenom;
-	private String mdp;
+	private String password;
 	private String email;
 	@Column(unique = true)
 	private String username;
@@ -43,19 +43,19 @@ public class Utilisateur implements Serializable {
 	//Getter AND Setter
 	 
 
-	@JsonGetter
-	public String getMdp() {
-		return mdp;
-	}
-
  
-	@JsonSetter
-	public void setMdp(String mdp) {
-		this.mdp = mdp;
-	}
-
 	public Long getId() {
 		return id;
+	}
+
+	@JsonGetter
+	public String getPassword() {
+		return password;
+	}
+
+	@JsonSetter
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setId(Long id) {

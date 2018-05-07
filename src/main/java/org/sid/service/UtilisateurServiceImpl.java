@@ -32,8 +32,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public Utilisateur save(Utilisateur utilisateur) {
-		String hashPassword=bCryptPasswordEncoder.encode(utilisateur.getMdp());
-		utilisateur.setMdp(hashPassword);
+		String hashPassword=bCryptPasswordEncoder.encode(utilisateur.getPassword());
+		utilisateur.setPassword(hashPassword);
 		return utilisateurRepository.save(utilisateur);
 
 	}

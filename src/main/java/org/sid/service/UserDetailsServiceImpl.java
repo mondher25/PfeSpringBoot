@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			authorities.add(new SimpleGrantedAuthority(r.getRole()));
 		});
 
-		return new User(user.getUsername(), user.getMdp(), authorities);
+		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
 
 }
