@@ -7,6 +7,7 @@ import org.sid.entities.Utilisateur;
 public interface UtilisateurService {
 	List<Utilisateur> findAll();
 	Utilisateur save(Utilisateur utilisateur);
+	List<Utilisateur> findAllUserByRole();
 	void update(Long id);
 	void delete(Long id);
 	Utilisateur findOne(Long id);

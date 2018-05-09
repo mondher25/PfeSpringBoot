@@ -44,9 +44,15 @@ public class UtilisateurRestController {
 		return listUsers;
 	}
 
-	@GetMapping("/user/{id}")
+	@GetMapping("/users/{id}")
 	public Utilisateur findById(@PathVariable("id") Long id) {
 		return utilisateurService.findOne(id);
 	}
+	
+	@GetMapping("/users/AllByRole")
+	public List<Utilisateur> findAllUserByRoleUser(){
+		return utilisateurService.findAllUserByRole();
+	}
+	
 
 }

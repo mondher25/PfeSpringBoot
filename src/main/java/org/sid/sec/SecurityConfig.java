@@ -2,7 +2,6 @@ package org.sid.sec;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,10 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		//http.formLogin();
 		/* pour ne pas cree des authentification base sur le session */
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 		http.authorizeRequests().antMatchers("/login/**", "/api/register/**").permitAll();
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN");
+		//http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ROLE_USER");
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
 		http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

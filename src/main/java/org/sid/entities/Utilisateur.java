@@ -2,8 +2,8 @@ package org.sid.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +34,7 @@ public class Utilisateur implements Serializable {
 	private boolean active;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-	private Collection<Role> roles = new ArrayList<Role>();
+	private List<Role> roles = new ArrayList<Role>();
 	
  
 
@@ -109,13 +109,15 @@ public class Utilisateur implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	public Collection<Role> getRoles() {
+ 
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Role> roles) {
+ 
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
+ 
 }

@@ -28,7 +28,7 @@ public class Tache implements Serializable {
 	private Date dateDebut;
 	private Date dateEcheance;
 	private String etatTache;
-	@OneToOne @JsonIgnore	 
+	@OneToOne 	 
 	private Utilisateur utilisateur;
 
 }
