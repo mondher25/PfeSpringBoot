@@ -61,6 +61,10 @@ public class UtilisateurRestController {
 		manager.setActive(true);
 		return utilisateurService.save(manager);
 	}
+	@GetMapping("/users/AllByRoleManager")
+	public List<Utilisateur> findAllUserByRoleManager(){
+		return utilisateurService.findAllManagerRole();
+	}
 	
 
 }

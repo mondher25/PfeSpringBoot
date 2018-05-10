@@ -13,4 +13,5 @@ public interface UtilisateurService {
 	Utilisateur findOne(Long id);
 	Utilisateur findUserByUsername(String username);
 	void addRoleToUser(String usename,String role);
+	List<Utilisateur> findAllManagerRole();
 }

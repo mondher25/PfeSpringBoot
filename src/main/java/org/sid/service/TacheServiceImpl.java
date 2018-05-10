@@ -25,4 +25,10 @@ public class TacheServiceImpl implements TacheService {
 		return tacheRepository.findAll();
 	}
 
+	@Override
+	public void deleteById(Long id) {
+		tacheRepository.deleteById(id);
+		
+	}
+
 }

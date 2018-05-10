@@ -72,4 +72,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.findAllUserByRole();
 	}
 
+	@Override
+	public List<Utilisateur> findAllManagerRole() {
+		 
+		return utilisateurRepository.findAllManagerRole();
+	}
+
 }

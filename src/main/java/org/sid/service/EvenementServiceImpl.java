@@ -9,19 +9,65 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EvenementServiceImpl implements EvenementService {
-	
+
 	@Autowired
 	private EvenementRepository evenementRepository;
 
 	@Override
-	public void save(Evenement evenement) {
-		 evenementRepository.save(evenement);
-		
+	public Evenement save(Evenement evenement) {
+		return evenementRepository.save(evenement);
+
 	}
-	
-	public List<Evenement> findAll(){
-		 
+
+	public List<Evenement> findAll() {
+
 		return evenementRepository.findAll();
 	}
+
+	@Override
+	public void deleteById(Long id) {
+		 
+		evenementRepository.deleteById(id);
+	}
+
+	@Override
+	public Evenement findEventById(Long id) {
+		return evenementRepository.findEventById(id);
+	}
+
+	@Override
+	public void delete(Evenement evenement) {
+		evenementRepository.delete(evenement);
+		
+	}
+
+	@Override
+	public void updateEvent(Evenement evenement) {
+		Evenement event =findEventById(evenement.getId());
+		event.setCategorie(evenement.getCategorie());
+		event.setDateEvenement(evenement.getDateEvenement());
+		event.setHeureEvenement(evenement.getHeureEvenement());
+		event.setDescription(evenement.getDescription());
+		event.setLieu(evenement.getLieu());
+		event.setNomEvenement(evenement.getNomEvenement());
+		evenementRepository.save(event);
+		
+	}
+
+	@Override
+	public void updateEvent(Long id,Evenement evenement) {
+		Evenement event =findEventById(id);
+		event.setCategorie(evenement.getCategorie());
+		event.setDateEvenement(evenement.getDateEvenement());
+		event.setHeureEvenement(evenement.getHeureEvenement());
+		event.setDescription(evenement.getDescription());
+		event.setLieu(evenement.getLieu());
+		event.setNomEvenement(evenement.getNomEvenement());
+		evenementRepository.save(event);
+		
+	}
+
+	 
+	 
 
 }

@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.Query;
 	
 	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_USER'")
 	List<Utilisateur> findAllUserByRole();
-	
+	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_MANAGER'")
+	List<Utilisateur> findAllManagerRole();
  }

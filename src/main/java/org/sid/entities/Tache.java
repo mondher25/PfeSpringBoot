@@ -28,5 +28,6 @@ public class Tache implements Serializable {
 	private String etatTache;
 	@OneToOne 	 
 	private Utilisateur utilisateur;
+	private Date dateAffectation;
 
 }

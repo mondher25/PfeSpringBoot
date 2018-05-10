@@ -36,5 +36,7 @@ public class Evenement implements Serializable {
 	private String description;
 	@OneToOne 	@JsonIgnore
 	private Utilisateur utilisateur;
+	private Date dateCreation;
+	
 
 }
