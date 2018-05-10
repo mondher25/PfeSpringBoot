@@ -54,5 +54,13 @@ public class UtilisateurRestController {
 		return utilisateurService.findAllUserByRole();
 	}
 	
+	@PostMapping("/users/manager")
+	public Utilisateur addManager(@RequestBody Utilisateur manager) {
+		manager.setDateInscrit(new Date());
+		manager.setRoles(Arrays.asList(roleService.findByRole("ROLE_MANAGER")));
+		manager.setActive(true);
+		return utilisateurService.save(manager);
+	}
+	
 
 }
