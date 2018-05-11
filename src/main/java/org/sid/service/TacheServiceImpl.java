@@ -28,7 +28,31 @@ public class TacheServiceImpl implements TacheService {
 	@Override
 	public void deleteById(Long id) {
 		tacheRepository.deleteById(id);
-		
+
+	}
+
+	@Override
+	public int getTotalTacheENcours() {
+
+		return tacheRepository.getTotalTacheENcours();
+	}
+
+	@Override
+	public int getTotalTacheNonCommence() {
+
+		return tacheRepository.getTotalTacheNonCommence();
+	}
+
+	@Override
+	public int getTotalTacheAnnule() {
+
+		return tacheRepository.getTotalTacheAnnule();
+	}
+
+	@Override
+	public int getTotalTacheTermine() {
+
+		return tacheRepository.getTotalTacheTermine();
 	}
 
 }

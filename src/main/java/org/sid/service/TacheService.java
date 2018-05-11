@@ -8,5 +8,9 @@ public interface TacheService {
 	Tache save(Tache tache);
 	List<Tache> findAll();
 	void deleteById(Long id);
+	int getTotalTacheENcours();
+	int getTotalTacheNonCommence();
+	int getTotalTacheAnnule();
+	int getTotalTacheTermine();
 	
 }

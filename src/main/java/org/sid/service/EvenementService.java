@@ -17,5 +17,6 @@ public interface EvenementService {
 	Evenement findEventById(Long id);
 
 	void updateEvent(Evenement evenement);
-	void updateEvent(Long id,Evenement evenement);
+
+	void updateEvent(Long id, Evenement evenement);
 }
