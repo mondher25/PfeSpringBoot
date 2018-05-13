@@ -32,7 +32,7 @@ public class Evenement implements Serializable {
 	private Date dateEvenement;
 	private String heureEvenement;
 	private String categorie;
-	@Column(length=600)
+	@Column(length=200)
 	private String description;
 	@OneToOne 	@JsonIgnore
 	private Utilisateur utilisateur;
