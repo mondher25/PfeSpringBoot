@@ -1,6 +1,7 @@
 package org.sid.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.sid.dao.TacheRepository;
 import org.sid.entities.Tache;
@@ -53,6 +54,13 @@ public class TacheServiceImpl implements TacheService {
 	public int getTotalTacheTermine() {
 
 		return tacheRepository.getTotalTacheTermine();
+	}
+
+	@Override
+	public Optional<Tache> findTacheById(Long id) {
+		 
+		return tacheRepository.findById(id);
+		 
 	}
 
 }

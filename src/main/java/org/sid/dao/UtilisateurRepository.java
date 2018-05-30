@@ -14,4 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 	List<Utilisateur> findAllUserByRole();
 	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_MANAGER'")
 	List<Utilisateur> findAllManagerRole();
+	
+	@Query("select count(u) from Utilisateur u where u.active = false ")
+	int totalCompteNonActive();
  }

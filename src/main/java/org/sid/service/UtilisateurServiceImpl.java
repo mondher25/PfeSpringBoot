@@ -2,6 +2,7 @@ package org.sid.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.sid.dao.RoleRepository;
 import org.sid.dao.UtilisateurRepository;
@@ -49,9 +50,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur findOne(Long id) {
+	public Optional<Utilisateur> getUserById(Long id) {
 
-		return null;
+		return utilisateurRepository.findById(id);
 	}
 
 	@Override
@@ -76,6 +77,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<Utilisateur> findAllManagerRole() {
 		 
 		return utilisateurRepository.findAllManagerRole();
+	}
+
+	@Override
+	public int totalCompteNonActive() {
+		 
+		return utilisateurRepository.totalCompteNonActive();
 	}
 
 }

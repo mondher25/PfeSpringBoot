@@ -17,5 +17,6 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 
 	@Query("SELECT COUNT(t.etatTache) FROM Tache t WHERE t.etatTache ='encours'")
 	int getTotalTacheENcours();
+	 
 }
 

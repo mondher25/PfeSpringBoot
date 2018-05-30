@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.sid.entities.Utilisateur;
 import org.sid.service.RoleService;
@@ -45,11 +46,11 @@ public class UtilisateurRestController {
 	}
 
 	@GetMapping("/users/{id}")
-	public Utilisateur findById(@PathVariable("id") Long id) {
-		return utilisateurService.findOne(id);
+	public Optional<Utilisateur> findById(@PathVariable("id") Long id) {
+		return utilisateurService.getUserById(id);
 	}
 	
-	@GetMapping("/users/AllByRole")
+	@GetMapping("/users/roleUser")
 	public List<Utilisateur> findAllUserByRoleUser(){
 		return utilisateurService.findAllUserByRole();
 	}
@@ -61,10 +62,14 @@ public class UtilisateurRestController {
 		manager.setActive(true);
 		return utilisateurService.save(manager);
 	}
-	@GetMapping("/users/AllByRoleManager")
+	@GetMapping("/users/roleManager")
 	public List<Utilisateur> findAllUserByRoleManager(){
 		return utilisateurService.findAllManagerRole();
 	}
 	
+	@GetMapping("/users/statistique")
+	public int TotalCompteNonActive() {
+		return utilisateurService.totalCompteNonActive();
+	}
 
 }
