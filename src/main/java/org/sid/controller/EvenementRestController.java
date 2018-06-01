@@ -48,5 +48,10 @@ public class EvenementRestController {
 		return evenementService.findEventById(id);
 
 	}
+	
+	@GetMapping("/events/totale")
+	public int totalEvent() {
+		return evenementService.totalEvent();
+	}
 
 }

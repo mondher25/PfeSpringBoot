@@ -10,8 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +29,7 @@ public class Profile implements Serializable {
 	private String numeroTelephone;
 	private String profession;
 	private String photoProfile;
-	@OneToOne @JsonIgnore
+	@OneToOne  
 	private Utilisateur utilisateur;
 	
 

@@ -16,4 +16,5 @@ public interface UtilisateurService {
 	void addRoleToUser(String usename,String role);
 	List<Utilisateur> findAllManagerRole();
 	int totalCompteNonActive();
+	int totalCompte();
 }

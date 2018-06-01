@@ -17,4 +17,7 @@ import org.springframework.data.jpa.repository.Query;
 	
 	@Query("select count(u) from Utilisateur u where u.active = false ")
 	int totalCompteNonActive();
+	
+	@Query("SELECT COUNT(u) FROM Utilisateur u ")
+	int totalCompte();
  }

@@ -11,8 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,7 +32,7 @@ public class Evenement implements Serializable {
 	private String categorie;
 	@Column(length=200)
 	private String description;
-	@OneToOne 	@JsonIgnore
+	@OneToOne 	 
 	private Utilisateur utilisateur;
 	private Date dateCreation;
 	

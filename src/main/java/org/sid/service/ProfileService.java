@@ -1,5 +1,7 @@
 package org.sid.service;
 
-public interface ProfileService {
+import org.sid.entities.Profile;
 
+public interface ProfileService {
+Profile saveProfile(Profile profile);
 }

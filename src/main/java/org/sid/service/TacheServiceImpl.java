@@ -63,4 +63,9 @@ public class TacheServiceImpl implements TacheService {
 		 
 	}
 
+	@Override
+	public int totalTache() {
+		return tacheRepository.totalTache();
+	}
+
 }

@@ -85,4 +85,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.totalCompteNonActive();
 	}
 
+	@Override
+	public int totalCompte() {
+		 
+		return utilisateurRepository.totalCompte();
+	}
+
 }

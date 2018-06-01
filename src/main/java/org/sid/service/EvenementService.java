@@ -19,4 +19,5 @@ public interface EvenementService {
 	void updateEvent(Evenement evenement);
 
 	void updateEvent(Long id, Evenement evenement);
+	int totalEvent();
 }

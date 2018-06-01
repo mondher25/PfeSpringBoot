@@ -67,6 +67,12 @@ public class EvenementServiceImpl implements EvenementService {
 		
 	}
 
+	@Override
+	public int totalEvent() {
+	 
+		return evenementRepository.totalEvent();
+	}
+
 	 
 	 
 

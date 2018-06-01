@@ -14,4 +14,5 @@ public interface TacheService {
 	int getTotalTacheAnnule();
 	int getTotalTacheTermine();
 	Optional<Tache> findTacheById(Long id);
+	int totalTache();
 }

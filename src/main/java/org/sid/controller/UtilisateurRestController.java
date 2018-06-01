@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.sid.entities.Profile;
 import org.sid.entities.Utilisateur;
+import org.sid.service.ProfileService;
 import org.sid.service.RoleService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +27,22 @@ public class UtilisateurRestController {
 	private UtilisateurService utilisateurService;
 	@Autowired
 	private RoleService roleService;
-	
- 
+
+	@Autowired
+	private ProfileService profileService;
 
 	@PostMapping("/register")
 	public Utilisateur register(@RequestBody Utilisateur utilisateur) {
 		utilisateur.setDateInscrit(new Date());
-		//profile.setUtilisateur(utilisateur);
-		//profileRepository.save(profile);
+		// profile.setUtilisateur(utilisateur);
+		// profileRepository.save(profile);
 		// utilisateurService.addRoleToUser(utilisateur.getUsername(), "ROLE_USER");
 		utilisateur.setRoles(Arrays.asList(roleService.findByRole("ROLE_USER")));
-		return utilisateurService.save(utilisateur);
+		Utilisateur user = utilisateurService.save(utilisateur);
+		Profile profile = new Profile();
+		profile.setUtilisateur(user);
+		profileService.saveProfile(profile);
+		return user;
 	}
 
 	@GetMapping("/users")
@@ -49,12 +56,12 @@ public class UtilisateurRestController {
 	public Optional<Utilisateur> findById(@PathVariable("id") Long id) {
 		return utilisateurService.getUserById(id);
 	}
-	
+
 	@GetMapping("/users/roleUser")
-	public List<Utilisateur> findAllUserByRoleUser(){
+	public List<Utilisateur> findAllUserByRoleUser() {
 		return utilisateurService.findAllUserByRole();
 	}
-	
+
 	@PostMapping("/users/manager")
 	public Utilisateur addManager(@RequestBody Utilisateur manager) {
 		manager.setDateInscrit(new Date());
@@ -62,14 +69,20 @@ public class UtilisateurRestController {
 		manager.setActive(true);
 		return utilisateurService.save(manager);
 	}
+
 	@GetMapping("/users/roleManager")
-	public List<Utilisateur> findAllUserByRoleManager(){
+	public List<Utilisateur> findAllUserByRoleManager() {
 		return utilisateurService.findAllManagerRole();
 	}
-	
+
 	@GetMapping("/users/statistique")
 	public int TotalCompteNonActive() {
 		return utilisateurService.totalCompteNonActive();
+	}
+
+	@GetMapping("/users/totale")
+	public int totalCompte() {
+		return utilisateurService.totalCompte();
 	}
 
 }
