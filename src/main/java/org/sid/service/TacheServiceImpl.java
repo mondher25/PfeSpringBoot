@@ -16,7 +16,7 @@ public class TacheServiceImpl implements TacheService {
 
 	@Override
 	public Tache save(Tache tache) {
-
+		tache.setEtatTache("Non Commencer");
 		return tacheRepository.save(tache);
 	}
 
