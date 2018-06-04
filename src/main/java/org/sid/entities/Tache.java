@@ -33,5 +33,7 @@ public class Tache implements Serializable {
 	@OneToOne 	 
 	private Utilisateur utilisateur;
 	private Date dateAffectation;
+	private boolean archive;
+ 
 
 }
