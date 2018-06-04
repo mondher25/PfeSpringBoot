@@ -35,6 +35,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public Utilisateur save(Utilisateur utilisateur) {
 		String hashPassword=bCryptPasswordEncoder.encode(utilisateur.getPassword());
 		utilisateur.setPassword(hashPassword);
+		utilisateur.setArchive(false);
 		return utilisateurRepository.save(utilisateur);
 
 	}

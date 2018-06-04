@@ -85,4 +85,8 @@ public class UtilisateurRestController {
 		return utilisateurService.totalCompte();
 	}
 
+	@GetMapping("/users/JWT/{username}")
+	public Utilisateur getUserByUsername(@PathVariable ("username") String username) {
+		return utilisateurService.findUserByUsername(username);
+	}
 }

@@ -3,6 +3,7 @@ package org.sid.service;
 import java.util.List;
 
 import org.sid.entities.Evenement;
+import org.sid.entities.Utilisateur;
 
 public interface EvenementService {
 
@@ -20,4 +21,5 @@ public interface EvenementService {
 
 	void updateEvent(Long id, Evenement evenement);
 	int totalEvent();
+	List<Evenement> findEventByUtilisateurId(Utilisateur utilisateur);
 }

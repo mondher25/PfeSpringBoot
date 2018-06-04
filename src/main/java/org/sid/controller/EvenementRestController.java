@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.sid.entities.Evenement;
 import org.sid.service.EvenementService;
+import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +24,15 @@ public class EvenementRestController {
 	@Autowired
 	private EvenementService evenementService;
 
+	@Autowired
+	private UtilisateurService UtilisateurService;
+	
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
 		evenement.setDateCreation(new Date());
+		System.out.println("security Context"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		String user =(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		evenement.setUtilisateur(UtilisateurService.findUserByUsername(user));
 		return evenementService.save(evenement);
 	}
 
@@ -52,6 +60,12 @@ public class EvenementRestController {
 	@GetMapping("/events/totale")
 	public int totalEvent() {
 		return evenementService.totalEvent();
+	}
+	
+	@GetMapping("/events/Auth/{username}")
+	public List<Evenement> getEventByUser(@PathVariable("username") String username) {
+		
+		return evenementService.findEventByUtilisateurId(UtilisateurService.findUserByUsername(username));
 	}
 
 }

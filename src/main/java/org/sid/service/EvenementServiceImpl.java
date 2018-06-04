@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sid.dao.EvenementRepository;
 import org.sid.entities.Evenement;
+import org.sid.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class EvenementServiceImpl implements EvenementService {
 
 	@Override
 	public Evenement save(Evenement evenement) {
+		evenement.setArchive(false);
 		return evenementRepository.save(evenement);
 
 	}
@@ -71,6 +73,12 @@ public class EvenementServiceImpl implements EvenementService {
 	public int totalEvent() {
 	 
 		return evenementRepository.totalEvent();
+	}
+
+	@Override
+	public List<Evenement> findEventByUtilisateurId(Utilisateur utilisateur) {
+		 
+		return evenementRepository.findByUtilisateurId(utilisateur.getId());
 	}
 
 	 

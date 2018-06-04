@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
  public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>{
 
-	public Utilisateur findByUsername(String username);
+	 Utilisateur findByUsername(String username);
 	
 	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_USER'")
 	List<Utilisateur> findAllUserByRole();

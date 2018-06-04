@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.sid.dao.TacheRepository;
 import org.sid.entities.Tache;
+import org.sid.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class TacheServiceImpl implements TacheService {
 	@Override
 	public Tache save(Tache tache) {
 		tache.setEtatTache("Non Commencer");
+		tache.setArchive(false);
 		return tacheRepository.save(tache);
 	}
 
@@ -66,6 +68,18 @@ public class TacheServiceImpl implements TacheService {
 	@Override
 	public int totalTache() {
 		return tacheRepository.totalTache();
+	}
+
+	@Override
+	public List<Tache> findTacheByUtilisateurId(Utilisateur utilisateur) {
+		 
+		return tacheRepository.findByUtilisateurId(utilisateur.getId());
+	}
+
+	@Override
+	public int findTotalByUtilisateurId(Utilisateur utilisateur) {
+		 
+		return tacheRepository.findTotalByUtilisateurId(utilisateur.getId());
 	}
 
 }

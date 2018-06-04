@@ -35,6 +35,6 @@ public class Evenement implements Serializable {
 	@OneToOne 	 
 	private Utilisateur utilisateur;
 	private Date dateCreation;
-	
+	private boolean archive;
 
 }

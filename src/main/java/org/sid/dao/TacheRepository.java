@@ -1,8 +1,11 @@
 package org.sid.dao;
 
+import java.util.List;
+
 import org.sid.entities.Tache;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface TacheRepository extends JpaRepository<Tache, Long> {
 
@@ -21,5 +24,9 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 	@Query("SELECT COUNT(t) FROM Tache t ")
 	int totalTache();
 	 
+	List<Tache> findByUtilisateurId(Long id);
+	
+	@Query("SELECT COUNT(t) FROM Tache t WHERE t.utilisateur.id=:id")
+	int findTotalByUtilisateurId(@Param("id") Long id);
 }
 

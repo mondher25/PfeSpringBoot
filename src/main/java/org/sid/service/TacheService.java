@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.sid.entities.Tache;
+import org.sid.entities.Utilisateur;
 
 public interface TacheService {
 	Tache save(Tache tache);
@@ -15,4 +16,6 @@ public interface TacheService {
 	int getTotalTacheTermine();
 	Optional<Tache> findTacheById(Long id);
 	int totalTache();
+	List<Tache> findTacheByUtilisateurId(Utilisateur utilisateur);
+	int findTotalByUtilisateurId(Utilisateur utilisateur);
 }

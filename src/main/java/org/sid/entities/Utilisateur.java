@@ -32,6 +32,7 @@ public class Utilisateur implements Serializable {
 	private String username;
 	private Date dateInscrit;
 	private boolean active;
+	private boolean archive;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	private List<Role> roles = new ArrayList<Role>();
@@ -117,6 +118,14 @@ public class Utilisateur implements Serializable {
  
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public boolean isArchive() {
+		return archive;
+	}
+
+	public void setArchive(boolean archive) {
+		this.archive = archive;
 	}
 
  

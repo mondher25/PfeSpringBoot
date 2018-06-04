@@ -1,5 +1,7 @@
 package org.sid.dao;
 
+import java.util.List;
+
 import org.sid.entities.Evenement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +13,5 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 	Evenement findEventById(@Param("id") Long id);
 	@Query("SELECT COUNT(e) FROM Evenement e ")
 	int totalEvent();
+	List<Evenement> findByUtilisateurId(Long id);
 }
