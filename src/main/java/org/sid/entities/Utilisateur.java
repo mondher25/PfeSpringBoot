@@ -31,14 +31,13 @@ public class Utilisateur implements Serializable {
 	@Column(unique = true)
 	private String username;
 	private Date dateInscrit;
-	private boolean active;
-	private boolean archive;
+	private boolean active; 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	private List<Role> roles = new ArrayList<Role>();
 	
- 
-
+	 
+	
 	
 	
 	//Getter AND Setter
@@ -120,13 +119,26 @@ public class Utilisateur implements Serializable {
 		this.roles = roles;
 	}
 
-	public boolean isArchive() {
-		return archive;
+	public Utilisateur() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setArchive(boolean archive) {
-		this.archive = archive;
+	public Utilisateur(Long id, String nom, String prenom, String password, String email, String username,
+			Date dateInscrit, boolean active, List<Role> roles) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.password = password;
+		this.email = email;
+		this.username = username;
+		this.dateInscrit = dateInscrit;
+		this.active = active;
+		this.roles = roles;
 	}
+
+	 
 
  
 }

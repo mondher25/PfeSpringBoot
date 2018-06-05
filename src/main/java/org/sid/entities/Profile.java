@@ -25,12 +25,17 @@ public class Profile implements Serializable {
 	private Long id;
 	@Temporal(TemporalType.DATE)
 	private Date dateNaissance;
-	private String Address;
+	private String address;
 	private String numeroTelephone;
 	private String profession;
 	private String photoProfile;
 	@OneToOne  
 	private Utilisateur utilisateur;
+	public Profile(Long id, Utilisateur utilisateur) {
+		super();
+		this.id = id;
+		this.utilisateur = utilisateur;
+	}
 	
 
 	 

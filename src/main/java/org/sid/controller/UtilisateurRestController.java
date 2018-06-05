@@ -27,8 +27,7 @@ public class UtilisateurRestController {
 	private UtilisateurService utilisateurService;
 	@Autowired
 	private RoleService roleService;
-
-	@Autowired
+ 	@Autowired
 	private ProfileService profileService;
 
 	@PostMapping("/register")
@@ -67,7 +66,11 @@ public class UtilisateurRestController {
 		manager.setDateInscrit(new Date());
 		manager.setRoles(Arrays.asList(roleService.findByRole("ROLE_MANAGER")));
 		manager.setActive(true);
-		return utilisateurService.save(manager);
+		Utilisateur userManager = utilisateurService.save(manager);
+		Profile profile = new Profile();
+		profile.setUtilisateur(userManager);
+		profileService.saveProfile(profile);
+		return userManager;
 	}
 
 	@GetMapping("/users/roleManager")

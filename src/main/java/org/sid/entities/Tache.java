@@ -22,7 +22,7 @@ public class Tache implements Serializable {
 	
 	@Id @GeneratedValue
 	private Long id;
-	
+	private String nomProjet;
 	private String nomTache;
 	private String description;
 	@Temporal(TemporalType.DATE)

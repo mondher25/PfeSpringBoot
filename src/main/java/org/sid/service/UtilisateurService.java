@@ -17,4 +17,5 @@ public interface UtilisateurService {
 	List<Utilisateur> findAllManagerRole();
 	int totalCompteNonActive();
 	int totalCompte();
+	Optional<Utilisateur> findUserById(Long id);
 }

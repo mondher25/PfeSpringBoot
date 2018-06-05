@@ -30,6 +30,7 @@ public class EvenementRestController {
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
 		evenement.setDateCreation(new Date());
+		evenement.setEtatEvent("EN ATTENTE");
 		System.out.println("security Context"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		String user =(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		evenement.setUtilisateur(UtilisateurService.findUserByUsername(user));
@@ -38,7 +39,7 @@ public class EvenementRestController {
 
 	@GetMapping("/events")
 	public List<Evenement> findAll() {
-		return evenementService.findAll();
+		return evenementService.findEventByArchiveFalse();
 	}
 
 	@DeleteMapping("/events/{id}")
@@ -46,9 +47,13 @@ public class EvenementRestController {
 		evenementService.deleteById(id);
 	}
 
-	@PutMapping("/events")
-	public void updateEvent( @RequestBody Evenement evenement) {
-		evenementService.save(evenement);
+	@PutMapping("/events/{id}")
+	public void updateEvent(@PathVariable Long id, @RequestBody Evenement event) {
+		event.setId(id);
+		if (event.getDateEvenement() == null ) {
+			event.setEtatEvent("EN ATTENTE");
+		}
+		evenementService.save(event);
 	}
 
 	@GetMapping("/events/{id}")
@@ -64,8 +69,21 @@ public class EvenementRestController {
 	
 	@GetMapping("/events/Auth/{username}")
 	public List<Evenement> getEventByUser(@PathVariable("username") String username) {
-		
+		 
 		return evenementService.findEventByUtilisateurId(UtilisateurService.findUserByUsername(username));
+	}
+	
+	@PutMapping("/events/archive/{id}")
+	public void archiveEvent(@PathVariable Long id, @RequestBody Evenement event) {
+		event.setId(id);
+		event.setArchive(true);
+		 System.out.println("event archived !!!");
+		evenementService.save(event);
+	}
+	
+	@GetMapping("/events/archives")
+	public List<Evenement> getAllEventArchived(){
+		return evenementService.findEventByArchiveTrue();
 	}
 
 }

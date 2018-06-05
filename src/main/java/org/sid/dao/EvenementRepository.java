@@ -11,7 +11,12 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
 	@Query("SELECT e FROM Evenement e Where id=:id")
 	Evenement findEventById(@Param("id") Long id);
+
 	@Query("SELECT COUNT(e) FROM Evenement e ")
 	int totalEvent();
-	List<Evenement> findByUtilisateurId(Long id);
+
+	List<Evenement> findByUtilisateurIdAndArchiveFalse(Long id);
+
+	List<Evenement> findByArchiveTrue();
+	List<Evenement> findByArchiveFalse();
 }

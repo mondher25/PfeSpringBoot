@@ -16,7 +16,8 @@ public class EvenementServiceImpl implements EvenementService {
 
 	@Override
 	public Evenement save(Evenement evenement) {
-		evenement.setArchive(false);
+		if (!evenement.isArchive())
+			evenement.setArchive(false);
 		return evenementRepository.save(evenement);
 
 	}
@@ -28,7 +29,7 @@ public class EvenementServiceImpl implements EvenementService {
 
 	@Override
 	public void deleteById(Long id) {
-		 
+
 		evenementRepository.deleteById(id);
 	}
 
@@ -40,12 +41,12 @@ public class EvenementServiceImpl implements EvenementService {
 	@Override
 	public void delete(Evenement evenement) {
 		evenementRepository.delete(evenement);
-		
+
 	}
 
 	@Override
 	public void updateEvent(Evenement evenement) {
-		Evenement event =findEventById(evenement.getId());
+		Evenement event = findEventById(evenement.getId());
 		event.setCategorie(evenement.getCategorie());
 		event.setDateEvenement(evenement.getDateEvenement());
 		event.setHeureEvenement(evenement.getHeureEvenement());
@@ -53,12 +54,12 @@ public class EvenementServiceImpl implements EvenementService {
 		event.setLieu(evenement.getLieu());
 		event.setNomEvenement(evenement.getNomEvenement());
 		evenementRepository.save(event);
-		
+
 	}
 
 	@Override
-	public void updateEvent(Long id,Evenement evenement) {
-		Evenement event =findEventById(id);
+	public void updateEvent(Long id, Evenement evenement) {
+		Evenement event = findEventById(id);
 		event.setCategorie(evenement.getCategorie());
 		event.setDateEvenement(evenement.getDateEvenement());
 		event.setHeureEvenement(evenement.getHeureEvenement());
@@ -66,22 +67,31 @@ public class EvenementServiceImpl implements EvenementService {
 		event.setLieu(evenement.getLieu());
 		event.setNomEvenement(evenement.getNomEvenement());
 		evenementRepository.save(event);
-		
+
 	}
 
 	@Override
 	public int totalEvent() {
-	 
+
 		return evenementRepository.totalEvent();
 	}
 
 	@Override
 	public List<Evenement> findEventByUtilisateurId(Utilisateur utilisateur) {
-		 
-		return evenementRepository.findByUtilisateurId(utilisateur.getId());
+
+		return evenementRepository.findByUtilisateurIdAndArchiveFalse(utilisateur.getId());
 	}
 
-	 
-	 
+	@Override
+	public List<Evenement> findEventByArchiveTrue() {
+
+		return evenementRepository.findByArchiveTrue();
+	}
+
+	@Override
+	public List<Evenement> findEventByArchiveFalse() {
+
+		return evenementRepository.findByArchiveFalse();
+	}
 
 }

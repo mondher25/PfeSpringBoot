@@ -18,4 +18,6 @@ public interface TacheService {
 	int totalTache();
 	List<Tache> findTacheByUtilisateurId(Utilisateur utilisateur);
 	int findTotalByUtilisateurId(Utilisateur utilisateur);
+	List<Tache> findByArchiveTrue();
+	List<Tache> findByArchiveFalse();
 }

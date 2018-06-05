@@ -17,7 +17,9 @@ public class TacheServiceImpl implements TacheService {
 
 	@Override
 	public Tache save(Tache tache) {
+		if (tache.getEtatTache() == null)
 		tache.setEtatTache("Non Commencer");
+		if (!tache.isArchive())
 		tache.setArchive(false);
 		return tacheRepository.save(tache);
 	}
@@ -80,6 +82,18 @@ public class TacheServiceImpl implements TacheService {
 	public int findTotalByUtilisateurId(Utilisateur utilisateur) {
 		 
 		return tacheRepository.findTotalByUtilisateurId(utilisateur.getId());
+	}
+
+	@Override
+	public List<Tache> findByArchiveTrue() {
+		 
+		return tacheRepository.findByArchiveTrue();
+	}
+
+	@Override
+	public List<Tache> findByArchiveFalse() {
+		 
+		return tacheRepository.findByArchiveFalse();
 	}
 
 }

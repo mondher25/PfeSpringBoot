@@ -1,6 +1,7 @@
 package org.sid.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.sid.entities.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 	
 	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_USER'")
 	List<Utilisateur> findAllUserByRole();
+	
 	@Query("SELECT u FROM Utilisateur u JOIN u.roles r where r.role ='ROLE_MANAGER'")
 	List<Utilisateur> findAllManagerRole();
 	
@@ -20,4 +22,6 @@ import org.springframework.data.jpa.repository.Query;
 	
 	@Query("SELECT COUNT(u) FROM Utilisateur u ")
 	int totalCompte();
+	
+	Optional<Utilisateur> findById(Long id);
  }

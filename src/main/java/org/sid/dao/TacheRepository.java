@@ -28,5 +28,8 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 	
 	@Query("SELECT COUNT(t) FROM Tache t WHERE t.utilisateur.id=:id")
 	int findTotalByUtilisateurId(@Param("id") Long id);
+	
+	List<Tache> findByArchiveTrue();
+	List<Tache> findByArchiveFalse();
 }
 

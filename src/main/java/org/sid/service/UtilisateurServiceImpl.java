@@ -34,8 +34,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public Utilisateur save(Utilisateur utilisateur) {
 		String hashPassword=bCryptPasswordEncoder.encode(utilisateur.getPassword());
-		utilisateur.setPassword(hashPassword);
-		utilisateur.setArchive(false);
+		utilisateur.setPassword(hashPassword);		 
 		return utilisateurRepository.save(utilisateur);
 
 	}
@@ -90,6 +89,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public int totalCompte() {
 		 
 		return utilisateurRepository.totalCompte();
+	}
+
+	@Override
+	public Optional<Utilisateur> findUserById(Long id) {
+		 
+		return utilisateurRepository.findById(id);
 	}
 
 }
