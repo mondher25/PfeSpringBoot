@@ -94,4 +94,14 @@ public class EvenementServiceImpl implements EvenementService {
 		return evenementRepository.findByArchiveFalse();
 	}
 
+	@Override
+	public int findTotalByUtilisateurId(Utilisateur utilisateur) {
+		return evenementRepository.findTotalByUtilisateurId(utilisateur.getId());
+	}
+
+	@Override
+	public int totalEventArchived() {
+		return evenementRepository.totalEventArchived();
+	}
+
 }

@@ -96,4 +96,10 @@ public class TacheServiceImpl implements TacheService {
 		return tacheRepository.findByArchiveFalse();
 	}
 
+	@Override
+	public int totalTacheArchived() {
+		 
+		return tacheRepository.totalTacheArchived();
+	}
+
 }

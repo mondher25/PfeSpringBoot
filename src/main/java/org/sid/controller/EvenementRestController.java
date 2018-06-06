@@ -25,7 +25,7 @@ public class EvenementRestController {
 	private EvenementService evenementService;
 
 	@Autowired
-	private UtilisateurService UtilisateurService;
+	private UtilisateurService utilisateurService;
 	
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
@@ -33,7 +33,7 @@ public class EvenementRestController {
 		evenement.setEtatEvent("EN ATTENTE");
 		System.out.println("security Context"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		String user =(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		evenement.setUtilisateur(UtilisateurService.findUserByUsername(user));
+		evenement.setUtilisateur(utilisateurService.findUserByUsername(user));
 		return evenementService.save(evenement);
 	}
 
@@ -66,11 +66,14 @@ public class EvenementRestController {
 	public int totalEvent() {
 		return evenementService.totalEvent();
 	}
-	
+	@GetMapping("/events/totale/archive")
+	public int totalEventArchived() {
+		return evenementService.totalEventArchived();
+	}
 	@GetMapping("/events/Auth/{username}")
 	public List<Evenement> getEventByUser(@PathVariable("username") String username) {
 		 
-		return evenementService.findEventByUtilisateurId(UtilisateurService.findUserByUsername(username));
+		return evenementService.findEventByUtilisateurId(utilisateurService.findUserByUsername(username));
 	}
 	
 	@PutMapping("/events/archive/{id}")
@@ -85,5 +88,10 @@ public class EvenementRestController {
 	public List<Evenement> getAllEventArchived(){
 		return evenementService.findEventByArchiveTrue();
 	}
+	@GetMapping("/events/total/{username}")
+	public int totalTacheByUsername(@PathVariable("username") String username) {
+		return evenementService.findTotalByUtilisateurId(utilisateurService.findUserByUsername(username));
+	}
+	
 
 }

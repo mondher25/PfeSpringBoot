@@ -21,8 +21,11 @@ public interface EvenementService {
 
 	void updateEvent(Long id, Evenement evenement);
 	int totalEvent();
+	int totalEventArchived();
 	List<Evenement> findEventByUtilisateurId(Utilisateur utilisateur);
 	
 	 List<Evenement> findEventByArchiveTrue();
 	 public List<Evenement> findEventByArchiveFalse();
+	 
+	 int findTotalByUtilisateurId(Utilisateur utilisateur);
 }

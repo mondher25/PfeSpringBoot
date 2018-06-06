@@ -16,6 +16,7 @@ public interface TacheService {
 	int getTotalTacheTermine();
 	Optional<Tache> findTacheById(Long id);
 	int totalTache();
+	int totalTacheArchived();
 	List<Tache> findTacheByUtilisateurId(Utilisateur utilisateur);
 	int findTotalByUtilisateurId(Utilisateur utilisateur);
 	List<Tache> findByArchiveTrue();
