@@ -14,6 +14,7 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
 	@Query("SELECT COUNT(e) FROM Evenement e WHERE e.archive=false ")
 	int totalEvent();
+
 	@Query("SELECT COUNT(e) FROM Evenement e WHERE e.archive=true ")
 	int totalEventArchived();
 
