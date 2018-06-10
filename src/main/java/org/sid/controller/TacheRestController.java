@@ -98,7 +98,7 @@ public class TacheRestController {
 		return tacheService.totalTache();
 	}
 
-	@GetMapping("/tasks/total/archive")
+	@GetMapping("/tasks/totale/archive")
 	public int totalTacheArchived() {
 		return tacheService.totalTacheArchived();
 	}
@@ -130,6 +130,14 @@ public class TacheRestController {
 		task.setId(id);
 		task.setArchive(true);
 		System.out.println("task archived !!!");
+		tacheService.save(task);
+	}
+	
+	@PutMapping("/tasks/restore/{id}")
+	public void restoreTask(@PathVariable Long id, @RequestBody Tache task) {
+		task.setId(id);
+		task.setArchive(false);
+		System.out.println("task restaured !!!");
 		tacheService.save(task);
 	}
 

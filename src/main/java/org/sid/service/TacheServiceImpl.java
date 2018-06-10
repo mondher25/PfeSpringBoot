@@ -3,7 +3,9 @@ package org.sid.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.sid.dao.CommentaireRepository;
 import org.sid.dao.TacheRepository;
+import org.sid.entities.Commentaire;
 import org.sid.entities.Tache;
 import org.sid.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,10 @@ public class TacheServiceImpl implements TacheService {
 
 	@Autowired
 	private TacheRepository tacheRepository;
-
+	
+	@Autowired
+	private CommentaireRepository commentaireRepository;
+	
 	@Override
 	public Tache save(Tache tache) {
 		if (tache.getEtatTache() == null)
@@ -32,6 +37,12 @@ public class TacheServiceImpl implements TacheService {
 
 	@Override
 	public void deleteById(Long id) {
+		System.out.println("id tache" + id);
+		List<Commentaire> listeComment=  commentaireRepository.findByTacheId(id);
+		for (Commentaire c:listeComment ) {
+			commentaireRepository.deleteById(c.getId());
+		}
+		
 		tacheRepository.deleteById(id);
 
 	}

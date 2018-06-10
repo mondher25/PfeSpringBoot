@@ -79,4 +79,10 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentRepository.totalDocumentArchived();
 	}
 
+	@Override
+	public void deleteDocument(Long id) {
+		documentRepository.deleteById(id);
+		
+	}
+
 }

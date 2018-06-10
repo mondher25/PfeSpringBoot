@@ -22,4 +22,5 @@ public interface DocumentService {
 	List<Document> findDocumentByArchiveFalseEtatPrive();
 
 	Document updateDocument(Document document);
+	void deleteDocument(Long id);
 	}
