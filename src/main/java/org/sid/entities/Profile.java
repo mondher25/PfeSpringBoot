@@ -29,6 +29,8 @@ public class Profile implements Serializable {
 	private String numeroTelephone;
 	private String profession;
 	private String photoProfile;
+	@Temporal(TemporalType.DATE)
+	private Date derniereConnexion;
 	@OneToOne  
 	private Utilisateur utilisateur;
 	public Profile(Long id, Utilisateur utilisateur) {

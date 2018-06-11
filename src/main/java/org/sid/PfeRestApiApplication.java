@@ -3,8 +3,6 @@ package org.sid;
 import java.util.List;
 
 import org.sid.entities.Utilisateur;
-import org.sid.service.ProfileService;
-import org.sid.service.RoleService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,11 +14,9 @@ public class PfeRestApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private UtilisateurService utilisateurService;
-	@Autowired
-	private RoleService roleService;
+ 
 	
-	@Autowired
-	private ProfileService profileService;
+ 
 
 	public static void main(String[] args) {
 		SpringApplication.run(PfeRestApiApplication.class, args);

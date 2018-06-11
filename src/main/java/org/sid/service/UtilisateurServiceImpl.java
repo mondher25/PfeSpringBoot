@@ -97,4 +97,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.findById(id);
 	}
 
+	@Override
+	public Utilisateur update(Utilisateur utilisateur) {
+		 
+		return utilisateurRepository.save(utilisateur);
+	}
+
 }
