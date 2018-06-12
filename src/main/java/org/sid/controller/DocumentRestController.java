@@ -1,20 +1,28 @@
 package org.sid.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.sid.entities.Document;
 import org.sid.service.DocumentService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +41,9 @@ public class DocumentRestController {
 	@Autowired
 	private DocumentService documentService;
 	private static final String FILE_PATH = "D:\\pfe-workspace\\PFERestApi\\Document\\";
-	
+
 	@Autowired
-	private UtilisateurService utilisateurService ;
+	private UtilisateurService utilisateurService;
 
 	@PostMapping("/document/upload")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -53,7 +61,7 @@ public class DocumentRestController {
 
 	@PostMapping("/documents")
 	public Document save(@RequestBody Document document) {
-		String user =(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		document.setUtilisateur(utilisateurService.findUserByUsername(user));
 		document.setDateCreation(new Date());
 		return documentService.save(document);
@@ -63,66 +71,70 @@ public class DocumentRestController {
 	public List<Document> getAll() {
 		return documentService.findDocumentByArchiveFalseEtatPublic();
 	}
+
 	@GetMapping("/documents/prive")
 	public List<Document> getAllDocumentPrivate() {
 		return documentService.findDocumentByArchiveFalseEtatPrive();
 	}
 
 	@GetMapping("/documents/{fileName:.+}")
-	public ResponseEntity<InputStreamResource> handleFileDownload(@PathVariable("fileName") String fileName) {
-		String fullPath = FILE_PATH + "" + fileName;
-		@SuppressWarnings("unused")
-		String message = "";
+	public ResponseEntity<Resource> handleFileDownload(@PathVariable("fileName") String fileName,
+			HttpServletRequest request) {
+
+		Resource resource = documentService.loadFileAsResource(fileName);
+
+		// Try to determine file's content type
+		String contentType = null;
 		try {
-			System.out.println(fullPath);
-			File file = new File(fullPath);
-			InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
-			message = "Telechargement de fichier  " + fileName + "avec success !";
-			 HttpHeaders headers = new HttpHeaders();
-			  headers.setContentType(MediaType.parseMediaType("application/pdf")); 
-			  headers.add("Content-Disposition", "filename=" + fileName);
-			  headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-			  headers.add("Pragma", "no-cache");
-			  headers.add("Expires", "0");
-			return new ResponseEntity<InputStreamResource>(inputStreamResource, headers, HttpStatus.OK);
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
 
-		} catch (Exception e) {
-
-			message = "erreur detelechargement de fichier  " + fileName + "!";
-			return new ResponseEntity<InputStreamResource>(HttpStatus.EXPECTATION_FAILED);
 		}
+
+		// Fallback to the default content type if type could not be determined
+		if (contentType == null) {
+			contentType = "application/octet-stream";
+		}
+		System.out.println("+------------------------------------+");
+		System.out.println(fileName);
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
 
 	}
 	
+	 
+
 	@GetMapping("/documents/totale")
 	public int totalDocument() {
 		return documentService.totalDocument();
 	}
-	
+
 	@GetMapping("/documents/totale/archive")
 	public int totalDocumentArchived() {
 		return documentService.totalDocumentArchived();
 	}
 
 	@GetMapping("/documents/archives")
-	public List<Document> getAllArchivedDocument(){
+	public List<Document> getAllArchivedDocument() {
 		return documentService.findDocumentByArchiveTrue();
 	}
-	
+
 	@DeleteMapping("/documents/{id}")
 	public void deleteArchivedDocument(@PathVariable("id") Long id) {
 		documentService.deleteDocument(id);
-		
+
 	}
-	
+
 	@PutMapping("/documents/archive/{id}")
-	public Document archiveDocument(@PathVariable("id")Long id,@RequestBody Document document) {
+	public Document archiveDocument(@PathVariable("id") Long id, @RequestBody Document document) {
 		document.setId(id);
 		document.setArchive(true);
 		return documentService.updateDocument(document);
 	}
+
 	@PutMapping("/documents/restaurer/{id}")
-	public Document restaurerDocument(@PathVariable("id")Long id,@RequestBody Document document) {
+	public Document restaurerDocument(@PathVariable("id") Long id, @RequestBody Document document) {
 		document.setId(id);
 		document.setArchive(false);
 		return documentService.updateDocument(document);

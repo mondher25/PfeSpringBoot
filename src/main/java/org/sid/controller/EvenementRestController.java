@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.sid.entities.Evenement;
+import org.sid.entities.Profile;
 import org.sid.service.EvenementService;
+import org.sid.service.ProfileService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,9 @@ public class EvenementRestController {
 
 	@Autowired
 	private UtilisateurService utilisateurService;
+	
+	@Autowired
+	private ProfileService profileService;
 	
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
@@ -91,6 +96,12 @@ public class EvenementRestController {
 	@GetMapping("/events/total/{username}")
 	public int totalTacheByUsername(@PathVariable("username") String username) {
 		return evenementService.findTotalByUtilisateurId(utilisateurService.findUserByUsername(username));
+	}
+	@GetMapping("/events/contact/{id}")
+	public List<Evenement> getContactEvent(@PathVariable("id") Long	id) {
+
+		 Profile profile =profileService.getProfileById(id);
+		 return evenementService.findEventByUtilisateurId(profile.getUtilisateur());
 	}
 	
 

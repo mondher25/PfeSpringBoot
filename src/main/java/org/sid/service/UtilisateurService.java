@@ -19,4 +19,5 @@ public interface UtilisateurService {
 	int totalCompte();
 	Optional<Utilisateur> findUserById(Long id);
 	Utilisateur update(Utilisateur utilisateur);
+	Utilisateur findUserContact(Long id);
 }

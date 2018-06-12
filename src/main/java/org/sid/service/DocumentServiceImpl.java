@@ -1,5 +1,6 @@
 package org.sid.service;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,6 +9,8 @@ import java.util.List;
 import org.sid.dao.DocumentRepository;
 import org.sid.entities.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -84,5 +87,21 @@ public class DocumentServiceImpl implements DocumentService {
 		documentRepository.deleteById(id);
 		
 	}
+
+	public Resource loadFileAsResource(String fileName) {
+	        try {
+	            Path filePath = this.rootLocation.resolve(fileName).normalize();
+	            System.out.println("filePath : Service"+ filePath);
+	            Resource resource = new UrlResource(filePath.toUri());
+	            if(resource.exists()) {
+	            	System.out.println("resource : Service"+ resource);
+	                return resource;
+	            } else {
+	                throw new RuntimeException("File not found " + fileName);
+	            }
+	        } catch (MalformedURLException ex) {
+	            throw new RuntimeException("File not found " + fileName, ex);
+	        }
+	    }
 
 }

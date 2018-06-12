@@ -103,4 +103,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.save(utilisateur);
 	}
 
+	@Override
+	public Utilisateur findUserContact(Long id) {
+		 
+		return utilisateurRepository.getOne(id);
+	}
+
 }

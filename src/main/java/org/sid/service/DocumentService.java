@@ -3,6 +3,7 @@ package org.sid.service;
 import java.util.List;
 
 import org.sid.entities.Document;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface DocumentService {
@@ -23,4 +24,5 @@ public interface DocumentService {
 
 	Document updateDocument(Document document);
 	void deleteDocument(Long id);
+	Resource loadFileAsResource(String fileName);
 	}

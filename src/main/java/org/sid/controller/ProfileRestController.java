@@ -84,4 +84,10 @@ public class ProfileRestController {
 		
 		return profileService.saveProfile(profile);
 	}
+	
+	@GetMapping("/profiles/detail/{id}")
+	public Profile getDetailProfile(@PathVariable("id") Long id) {
+		
+		return profileService.getProfileById(id);
+	}
 }

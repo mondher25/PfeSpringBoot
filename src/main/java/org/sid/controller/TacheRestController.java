@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.sid.entities.Commentaire;
+import org.sid.entities.Profile;
 import org.sid.entities.Tache;
+import org.sid.entities.Utilisateur;
 import org.sid.service.CommentaireService;
+import org.sid.service.ProfileService;
 import org.sid.service.TacheService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,9 @@ public class TacheRestController {
 
 	@Autowired
 	private CommentaireService commentaireService;
+	
+	@Autowired
+	private ProfileService profileService;
 
 	@PostMapping("/tasks")
 	public Tache saveTache(@RequestBody Tache tache) {
@@ -140,5 +146,12 @@ public class TacheRestController {
 		System.out.println("task restaured !!!");
 		tacheService.save(task);
 	}
+	@GetMapping("/tasks/contact/{id}")
+	public List<Tache> getTacheProfileUser(@PathVariable("id") Long id) {
+		 Profile profile =profileService.getProfileById(id);
+		 
+		return tacheService.findTacheByUtilisateurId(profile.getUtilisateur());
+	}
+
 
 }

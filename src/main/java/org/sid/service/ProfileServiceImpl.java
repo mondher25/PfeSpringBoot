@@ -32,4 +32,10 @@ public class ProfileServiceImpl implements ProfileService {
 		return ProfileRepository.findByUtilisateurId(utilisateur.getId());
 	}
 
+	@Override
+	public Profile getProfileById(Long id) {
+		 
+		return ProfileRepository.getOne(id);
+	}
+
 }

@@ -9,4 +9,5 @@ public interface ProfileService {
 Profile saveProfile(Profile profile);
 List<Profile> getAll();
 public Profile findProfileByUser(Utilisateur utilisateur);
+Profile getProfileById(Long id);
 }
