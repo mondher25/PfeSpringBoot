@@ -3,6 +3,7 @@ package org.sid.service;
 import java.util.List;
 
 import org.sid.entities.Document;
+import org.sid.entities.Utilisateur;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,9 @@ public interface DocumentService {
 	Document updateDocument(Document document);
 	void deleteDocument(Long id);
 	Resource loadFileAsResource(String fileName);
+	List<Document> findDocumentByUsername(Utilisateur utilisateur);
 
-	public Resource loadFile(String filename);
+	 Resource loadFile(String filename);
+	Document getDocumentById(Long id);
+	List<Document> findByUtilisateur(Utilisateur utilisateur);
 	}

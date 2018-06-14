@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.sid.entities.Commentaire;
 import org.sid.entities.Profile;
 import org.sid.entities.Tache;
-import org.sid.entities.Utilisateur;
 import org.sid.service.CommentaireService;
 import org.sid.service.ProfileService;
 import org.sid.service.TacheService;
@@ -35,7 +34,7 @@ public class TacheRestController {
 
 	@Autowired
 	private CommentaireService commentaireService;
-	
+
 	@Autowired
 	private ProfileService profileService;
 
@@ -138,7 +137,7 @@ public class TacheRestController {
 		System.out.println("task archived !!!");
 		tacheService.save(task);
 	}
-	
+
 	@PutMapping("/tasks/restore/{id}")
 	public void restoreTask(@PathVariable Long id, @RequestBody Tache task) {
 		task.setId(id);
@@ -146,12 +145,12 @@ public class TacheRestController {
 		System.out.println("task restaured !!!");
 		tacheService.save(task);
 	}
+
 	@GetMapping("/tasks/contact/{id}")
 	public List<Tache> getTacheProfileUser(@PathVariable("id") Long id) {
-		 Profile profile =profileService.getProfileById(id);
-		 
+		Profile profile = profileService.getProfileById(id);
+
 		return tacheService.findTacheByUtilisateurId(profile.getUtilisateur());
 	}
-
 
 }

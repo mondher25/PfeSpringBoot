@@ -35,9 +35,8 @@ public class EvenementRestController {
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
 		evenement.setDateCreation(new Date());
-		evenement.setEtatEvent("EN ATTENTE");
-		System.out.println("security Context"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		String user =(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		evenement.setEtatEvent("EN ATTENTE");		 
+		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		evenement.setUtilisateur(utilisateurService.findUserByUsername(user));
 		return evenementService.save(evenement);
 	}

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.sid.dao.DocumentRepository;
 import org.sid.entities.Document;
+import org.sid.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -118,6 +119,24 @@ public class DocumentServiceImpl implements DocumentService {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("FAIL!");
 		}
+	}
+
+	@Override
+	public List<Document> findDocumentByUsername(Utilisateur utilisateur) {
+		 
+		return documentRepository.findDocumentByUtilisateurIdAndEtatFalseAndArchiveFalse(utilisateur.getId());
+	}
+
+	@Override
+	public Document getDocumentById(Long id) {
+		 
+		return documentRepository.getOne(id);
+	}
+
+	@Override
+	public List<Document> findByUtilisateur(Utilisateur utilisateur) {
+		 
+		return documentRepository.findByUtilisateurIdAndArchiveFalse(utilisateur.getId());
 	}
 
 }

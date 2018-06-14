@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.sid.controller.util.MediaTypeUtils;
 import org.sid.entities.Document;
+import org.sid.entities.Utilisateur;
 import org.sid.service.DocumentService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,10 @@ public class DocumentRestController {
 		return documentService.findDocumentByArchiveFalseEtatPublic();
 	}
 
+	@GetMapping("/documents/edit/{id}")
+	public Document getDocumentById(@PathVariable("id")Long id) {
+		return documentService.getDocumentById(id);
+	}
 	@GetMapping("/documents/prive")
 	public List<Document> getAllDocumentPrivate() {
 		return documentService.findDocumentByArchiveFalseEtatPrive();
@@ -147,5 +152,21 @@ public class DocumentRestController {
 		document.setArchive(false);
 		return documentService.updateDocument(document);
 	}
- 
+	@GetMapping("/documents/prive/username/{username}")
+	public List<Document> getDocumentPriveByUsername(@PathVariable("username") String username) {
+		
+		Utilisateur utilisateur = utilisateurService.findUserByUsername(username);
+		return documentService.findDocumentByUsername(utilisateur);
+	}
+	
+	@PutMapping("/documents/{id}")
+	public Document updateDocument(@PathVariable ("id") Long id,@RequestBody Document document) {
+		document.setId(id);
+		return documentService.updateDocument(document);
+	}
+	@GetMapping("/documents/Auth/{username}")
+	public List<Document> getDocByUser(@PathVariable("username") String username) {
+		 
+		return documentService.findByUtilisateur(utilisateurService.findUserByUsername(username));
+	}
 }

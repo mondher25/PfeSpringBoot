@@ -40,12 +40,12 @@ public class AttachementRestController {
 
 	@Autowired
 	private AttachementService attachementService;
-	
+
 	private static final String FILE_PATH = "D:\\pfe-workspace\\PFERestApi\\Attachement\\";
 	List<String> files = new ArrayList<String>();
 	@Autowired
 	private ServletContext servletContext;
-	
+
 	@PostMapping("/attachements/upload")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String message = "";
@@ -56,7 +56,7 @@ public class AttachementRestController {
 			Attachement attachement = new Attachement();
 			attachement.setFile(file.getOriginalFilename());
 			attachement.setDateCreation(new Date());
-			//attachement.setTache(new Tache());
+			// attachement.setTache(new Tache());
 			attachementService.saveAttachement(attachement);
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
@@ -64,16 +64,17 @@ public class AttachementRestController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 		}
 	}
-	
+
 	@GetMapping("/attachements/getallfiles")
 	public ResponseEntity<List<String>> getListFiles(Model model) {
-		List<String> fileNames = files
-				.stream().map(fileName -> MvcUriComponentsBuilder
+		List<String> fileNames = files.stream()
+				.map(fileName -> MvcUriComponentsBuilder
 						.fromMethodName(AttachementRestController.class, "getFile", fileName).build().toString())
 				.collect(Collectors.toList());
- 
+
 		return ResponseEntity.ok().body(fileNames);
 	}
+
 	@GetMapping("/files/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
@@ -82,40 +83,42 @@ public class AttachementRestController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
-	
+
 	@PostMapping("/attachements")
-	public Attachement  saveAttachement(@RequestBody Attachement attachement) {
+	public Attachement saveAttachement(@RequestBody Attachement attachement) {
 		return attachementService.saveAttachement(attachement);
 	}
-	
+
 	@GetMapping("/attachements")
 	public List<Attachement> findAllAttachement() {
 		return attachementService.findAllAttachement();
 	}
-	
+
 	@DeleteMapping("/attachements/{id}")
 	public void deleteAttachement(@PathVariable("id") Long id) {
 		attachementService.deleteAttachementById(id);
 	}
+
 	@GetMapping("/attachements/{fileName:.+}")
-	public ResponseEntity<InputStreamResource> handleFileDownload(@PathVariable(value="fileName") String fileName, HttpServletResponse resonse) throws IOException {
-		//Resource resource = documentService.loadFileAsResource(fileName);
-		 MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
-		  
-	   		// Try to determine file's content type
-		 
-		 File file = new File(FILE_PATH + "/" + fileName);
-	        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));	        
+	public ResponseEntity<InputStreamResource> handleFileDownload(@PathVariable(value = "fileName") String fileName,
+			HttpServletResponse resonse) throws IOException {
+		// Resource resource = documentService.loadFileAsResource(fileName);
+		MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+
+		// Try to determine file's content type
+
+		File file = new File(FILE_PATH + "/" + fileName);
+		InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
 		System.out.println("+------------------------------------+");
-		System.out.println(fileName);		
+		System.out.println(fileName);
 		return ResponseEntity.ok()
-                // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+file.getName())
-                // Content-Type
-                .contentType(mediaType)
-                // Contet-Length
-                .contentLength(file.length()) //
-                .body(inputStreamResource);
+				// Content-Disposition
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+				// Content-Type
+				.contentType(mediaType)
+				// Contet-Length
+				.contentLength(file.length()) //
+				.body(inputStreamResource);
 
 	}
 
