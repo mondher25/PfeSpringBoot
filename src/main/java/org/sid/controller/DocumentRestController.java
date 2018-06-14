@@ -1,28 +1,26 @@
 package org.sid.controller;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLConnection;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.sid.controller.util.MediaTypeUtils;
 import org.sid.entities.Document;
 import org.sid.service.DocumentService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,9 +39,13 @@ public class DocumentRestController {
 	@Autowired
 	private DocumentService documentService;
 	private static final String FILE_PATH = "D:\\pfe-workspace\\PFERestApi\\Document\\";
+	 private static final String DEFAULT_FILE_NAME = "java-tutorial.pdf";
 
 	@Autowired
 	private UtilisateurService utilisateurService;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	@PostMapping("/document/upload")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -78,32 +80,38 @@ public class DocumentRestController {
 	}
 
 	@GetMapping("/documents/{fileName:.+}")
-	public ResponseEntity<Resource> handleFileDownload(@PathVariable("fileName") String fileName,
-			HttpServletRequest request) {
-
-		Resource resource = documentService.loadFileAsResource(fileName);
-
-		// Try to determine file's content type
-		String contentType = null;
-		try {
-			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-		} catch (IOException ex) {
-
-		}
-
-		// Fallback to the default content type if type could not be determined
-		if (contentType == null) {
-			contentType = "application/octet-stream";
-		}
+	public ResponseEntity<InputStreamResource> handleFileDownload(@PathVariable(value="fileName") String fileName, HttpServletResponse resonse) throws IOException {
+		//Resource resource = documentService.loadFileAsResource(fileName);
+		 MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+		  
+	   		// Try to determine file's content type
+		 
+		 File file = new File(FILE_PATH + "/" + fileName);
+	        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));	        
 		System.out.println("+------------------------------------+");
-		System.out.println(fileName);
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+		System.out.println(fileName);		
+		return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(inputStreamResource);
 
 	}
-	
+
+
+	public ResponseEntity<InputStreamResource> download(@RequestParam(value="fileName", defaultValue=DEFAULT_FILE_NAME) String fileName) throws FileNotFoundException {
+		String fullPath = FILE_PATH + fileName;
+		File file = new File(fullPath);		
+		HttpHeaders httpHeaders = new HttpHeaders();	 
 	 
+		httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+		httpHeaders.add("Content-Disposition", "attachment;filename=\""+fileName+"\"");
+		InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
+		return new ResponseEntity<InputStreamResource>(inputStreamResource,httpHeaders,HttpStatus.OK);
+	}
 
 	@GetMapping("/documents/totale")
 	public int totalDocument() {
@@ -139,4 +147,5 @@ public class DocumentRestController {
 		document.setArchive(false);
 		return documentService.updateDocument(document);
 	}
+ 
 }

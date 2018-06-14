@@ -25,4 +25,6 @@ public interface DocumentService {
 	Document updateDocument(Document document);
 	void deleteDocument(Long id);
 	Resource loadFileAsResource(String fileName);
+
+	public Resource loadFile(String filename);
 	}

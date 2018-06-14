@@ -26,13 +26,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Headers", 
-				"Origin, Accept, X-Requested-With, Content-Type, "
+				"Origin, Accept, X-Requested-With, Content-Type, Content-Disposition, "
 		+ "Access-Control-Request-Method, "
 						+"Access-Control-Headers,"
 		+"Authorization");
 		response.addHeader("Access-Control-Expose-Headers", 
 				"Access-Control-Allow-Origin, "
-		+"Access-Control-Allow-Credentials, Authorization");
+		+"Access-Control-Allow-Credentials, Authorization, Content-Disposition");
 		response.addHeader("Access-Control-Allow-Methods","*");
 		 String jwt=request.getHeader(SecurityContants.HEADER_STRING);
 		 System.out.println(jwt);
