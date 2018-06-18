@@ -34,6 +34,7 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 	
 	List<Tache> findByArchiveTrue();
 	List<Tache> findByArchiveFalse();
+	Tache findByNomTache(String nomTache);
 	 
 }
 

@@ -100,8 +100,8 @@ public class UtilisateurRestController {
 	public boolean sendMailActiveCompteUser(@RequestBody Utilisateur utilisateur) {
 		emailService.sendMailNotification(utilisateur);
 		System.out.println("email send !!!");
-		utilisateur.setActive(true);
-		utilisateurService.update(utilisateur);
+		//utilisateur.setActive(true);
+		//utilisateurService.update(utilisateur);
 		return  true;
 		
 	}

@@ -9,6 +9,7 @@ import org.sid.service.EvenementService;
 import org.sid.service.ProfileService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,13 @@ public class EvenementRestController {
 	@PostMapping("/events")
 	public Evenement save(@RequestBody Evenement evenement) {
 		evenement.setDateCreation(new Date());
-		evenement.setEtatEvent("EN ATTENTE");		 
-		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		evenement.setUtilisateur(utilisateurService.findUserByUsername(user));
+		evenement.setEtatEvent("EN ATTENTE");	
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		//UserDetails userDetails =  (UserDetails) SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(currentPrincipalName);
+		//String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		evenement.setUtilisateur(utilisateurService.findUserByUsername(currentPrincipalName ) );
 		return evenementService.save(evenement);
 	}
 

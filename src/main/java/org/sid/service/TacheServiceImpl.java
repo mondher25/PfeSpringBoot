@@ -1,10 +1,11 @@
 package org.sid.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.sid.dao.AttachementRepository;
 import org.sid.dao.CommentaireRepository;
 import org.sid.dao.TacheRepository;
+import org.sid.entities.Attachement;
 import org.sid.entities.Commentaire;
 import org.sid.entities.Tache;
 import org.sid.entities.Utilisateur;
@@ -16,6 +17,9 @@ public class TacheServiceImpl implements TacheService {
 
 	@Autowired
 	private TacheRepository tacheRepository;
+	
+	@Autowired
+	private AttachementRepository attachementRepository;
 	
 	@Autowired
 	private CommentaireRepository commentaireRepository;
@@ -39,6 +43,9 @@ public class TacheServiceImpl implements TacheService {
 	public void deleteById(Long id) {
 		System.out.println("id tache" + id);
 		List<Commentaire> listeComment=  commentaireRepository.findByTacheId(id);
+		List<Attachement> listeTache = attachementRepository.findByTacheId(id);
+		listeTache.forEach(a ->attachementRepository.deleteById(a.getId()) );
+		 
 		for (Commentaire c:listeComment ) {
 			commentaireRepository.deleteById(c.getId());
 		}
@@ -72,9 +79,9 @@ public class TacheServiceImpl implements TacheService {
 	}
 
 	@Override
-	public Optional<Tache> findTacheById(Long id) {
+	public Tache findTacheById(Long id) {
 		 
-		return tacheRepository.findById(id);
+		return tacheRepository.getOne(id);
 		 
 	}
 
@@ -111,6 +118,12 @@ public class TacheServiceImpl implements TacheService {
 	public int totalTacheArchived() {
 		 
 		return tacheRepository.totalTacheArchived();
+	}
+
+	@Override
+	public Tache findTachebyNomTache(String nomTache) {
+ 
+		return tacheRepository.findByNomTache(nomTache);
 	}
 
 }

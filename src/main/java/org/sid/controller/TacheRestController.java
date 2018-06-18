@@ -2,7 +2,6 @@ package org.sid.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.sid.entities.Commentaire;
 import org.sid.entities.Profile;
@@ -12,6 +11,7 @@ import org.sid.service.ProfileService;
 import org.sid.service.TacheService;
 import org.sid.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +42,7 @@ public class TacheRestController {
 	public Tache saveTache(@RequestBody Tache tache) {
 
 		tache.setDateAffectation(new Date());
+		tache.setDateModification(new Date());
 		return tacheService.save(tache);
 
 	}
@@ -49,6 +50,7 @@ public class TacheRestController {
 	@PutMapping("/tasks/{id}")
 	public Tache updateTache(@PathVariable Long id, @RequestBody Tache task) {
 		task.setId(id);
+		task.setDateModification(new Date());
 		System.out.println("update Tache --- ");
 		System.out.println(task.getEtatTache());
 		return tacheService.save(task);
@@ -86,14 +88,16 @@ public class TacheRestController {
 	}
 
 	@GetMapping("/tasks/{id}")
-	public Optional<Tache> findTacheById(@PathVariable("id") Long id) {
+	public Tache findTacheById(@PathVariable("id") Long id) {
 		return tacheService.findTacheById(id);
 	}
 
 	@PostMapping("/tasks/comment")
 	public Commentaire saveComment(@RequestBody Commentaire commentaire) {
-		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		commentaire.setUtilisateur(utilisateurService.findUserByUsername(user));
+		//String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		commentaire.setUtilisateur(utilisateurService.findUserByUsername(currentPrincipalName));
 		commentaire.setDateComment(new Date());
 		return commentaireService.saveComment(commentaire);
 	}

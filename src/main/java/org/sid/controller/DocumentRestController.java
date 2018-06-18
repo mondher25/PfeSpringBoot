@@ -21,6 +21,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,8 +65,10 @@ public class DocumentRestController {
 
 	@PostMapping("/documents")
 	public Document save(@RequestBody Document document) {
-		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		document.setUtilisateur(utilisateurService.findUserByUsername(user));
+	//String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		document.setUtilisateur(utilisateurService.findUserByUsername(currentPrincipalName));
 		document.setDateCreation(new Date());
 		return documentService.save(document);
 	}

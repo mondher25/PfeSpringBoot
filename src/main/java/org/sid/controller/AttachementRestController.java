@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.sid.controller.util.MediaTypeUtils;
 import org.sid.entities.Attachement;
 import org.sid.service.AttachementService;
+import org.sid.service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -40,6 +41,10 @@ public class AttachementRestController {
 
 	@Autowired
 	private AttachementService attachementService;
+	
+	@SuppressWarnings("unused")
+	@Autowired
+	private TacheService tacheService;
 
 	private static final String FILE_PATH = "D:\\pfe-workspace\\PFERestApi\\Attachement\\";
 	List<String> files = new ArrayList<String>();
@@ -47,17 +52,13 @@ public class AttachementRestController {
 	private ServletContext servletContext;
 
 	@PostMapping("/attachements/upload")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file ) {
 		String message = "";
 		try {
 			attachementService.store(file);
-			files.add(file.getOriginalFilename());
+			 
 			message = "upload de fichier  " + file.getOriginalFilename() + "avec success !";
-			Attachement attachement = new Attachement();
-			attachement.setFile(file.getOriginalFilename());
-			attachement.setDateCreation(new Date());
-			// attachement.setTache(new Tache());
-			attachementService.saveAttachement(attachement);
+			 
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
 			message = "erreur upload  " + file.getOriginalFilename() + "!";
@@ -74,7 +75,8 @@ public class AttachementRestController {
 
 		return ResponseEntity.ok().body(fileNames);
 	}
-
+	
+ 
 	@GetMapping("/files/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
@@ -86,12 +88,21 @@ public class AttachementRestController {
 
 	@PostMapping("/attachements")
 	public Attachement saveAttachement(@RequestBody Attachement attachement) {
+		attachement.setDateCreation(new Date());
+		int length = attachement.getFile().length();
+		String path = attachement.getFile().substring(12, length);		
+		attachement.setFile(path);
 		return attachementService.saveAttachement(attachement);
 	}
 
 	@GetMapping("/attachements")
 	public List<Attachement> findAllAttachement() {
 		return attachementService.findAllAttachement();
+	}
+	
+	@GetMapping("/attachements/tache/{id}")
+	public List<Attachement> findAttachementByTacheID(@PathVariable("id") Long id) {
+		return attachementService.findAttachementByTacheId(id);
 	}
 
 	@DeleteMapping("/attachements/{id}")

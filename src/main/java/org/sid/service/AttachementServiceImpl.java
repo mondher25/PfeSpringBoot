@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.sid.dao.AttachementRepository;
 import org.sid.entities.Attachement;
-import org.sid.entities.Tache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -49,12 +48,12 @@ public class AttachementServiceImpl implements AttachementService {
 	@Override
 	public Attachement saveAttachement(Attachement attachement) {
 		
-		return attachementRepository.saveAndFlush(attachement);
+		return attachementRepository.save(attachement);
 	}
 	@Override
-	public List<Attachement> findAttachementByTacheId(Tache tache) {
+	public List<Attachement> findAttachementByTacheId(Long id) {
 		 
-		return attachementRepository.findByTacheId(tache.getId());
+		return attachementRepository.findByTacheId(id);
 	}
 	@Override
 	public List<Attachement> findAllAttachement() {
