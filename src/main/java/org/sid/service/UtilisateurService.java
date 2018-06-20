@@ -20,4 +20,5 @@ public interface UtilisateurService {
 	Optional<Utilisateur> findUserById(Long id);
 	Utilisateur update(Utilisateur utilisateur);
 	Utilisateur findUserContact(Long id);
+	Utilisateur findUserByEmail(String email);
 }

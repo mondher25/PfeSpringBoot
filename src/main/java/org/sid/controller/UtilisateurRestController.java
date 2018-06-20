@@ -58,6 +58,19 @@ public class UtilisateurRestController {
 	public Optional<Utilisateur> findById(@PathVariable("id") Long id) {
 		return utilisateurService.getUserById(id);
 	}
+	
+	@PostMapping("/users/recovpass")
+	public Utilisateur findUserByEmail(@RequestBody String email) {
+		Utilisateur user =utilisateurService.findUserByEmail(email.trim());
+		System.out.println("email" +email);
+		System.out.println(user.getPassword());
+		if (user != null ) {
+			//emailService.sendMailPassword(user);
+			System.out.println("email send");
+		}
+		return user;
+		
+	}
 
 	@GetMapping("/users/roleUser")
 	public List<Utilisateur> findAllUserByRoleUser() {

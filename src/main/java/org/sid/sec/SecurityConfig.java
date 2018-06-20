@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		/* pour ne pas cree des authentification base sur le session */
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
-		http.authorizeRequests().antMatchers("/login/**", "/api/register/**").permitAll();
+		http.authorizeRequests().antMatchers("/login/**", "/api/register/**","/api/users/recovpass/**").permitAll();
 		//http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ROLE_USER");
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager()));

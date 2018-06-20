@@ -24,4 +24,5 @@ import org.springframework.data.jpa.repository.Query;
 	int totalCompte();
 	
 	Optional<Utilisateur> findById(Long id);
+	Utilisateur findByEmail(String email);
  }

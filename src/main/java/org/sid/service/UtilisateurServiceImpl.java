@@ -109,4 +109,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.getOne(id);
 	}
 
+	@Override
+	public Utilisateur findUserByEmail(String email) {
+		 
+		return utilisateurRepository.findByEmail(email);
+	}
+
 }

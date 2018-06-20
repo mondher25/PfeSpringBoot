@@ -37,8 +37,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		 Utilisateur utilisateur =null;
 		 
 		 try {
-			 /* objectmapper de jackson desérialize le donnee le objet JSON */
-			 utilisateur=new ObjectMapper().readValue(request.getInputStream(), Utilisateur.class);
+ 			 utilisateur=new ObjectMapper().readValue(request.getInputStream(), Utilisateur.class);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

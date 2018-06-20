@@ -93,7 +93,7 @@ public class TacheServiceImpl implements TacheService {
 	@Override
 	public List<Tache> findTacheByUtilisateurId(Utilisateur utilisateur) {
 		 
-		return tacheRepository.findByUtilisateurId(utilisateur.getId());
+		return tacheRepository.findByUtilisateurIdAndArchiveFalse(utilisateur.getId());
 	}
 
 	@Override
