@@ -37,7 +37,7 @@ public class UtilisateurRestController {
 	@PostMapping("/register")
 	public Utilisateur register(@RequestBody Utilisateur utilisateur) {
 		Utilisateur userForm = utilisateurService.findUserByUsername(utilisateur.getUsername());
-		if (userForm != null)throw new RuntimeException("username non valid ou déja choisi .. ");			
+		if (userForm != null)throw new RuntimeException("username non valid ... !! ");			
 		utilisateur.setDateInscrit(new Date());
 		utilisateur.setRoles(Arrays.asList(roleService.findByRole("ROLE_USER")));
 		Utilisateur user = utilisateurService.save(utilisateur);

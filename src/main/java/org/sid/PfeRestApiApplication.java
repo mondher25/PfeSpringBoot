@@ -24,7 +24,7 @@ public class PfeRestApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*Utilisateur admin = new Utilisateur(1L, "Guemri", "Mondher", "admin", "mondher.guemri.dev@gmail.com", "admin",
+		/*Utilisateur admin = new Utilisateur(1L, "Guemri", "Mahmoud", "admin", "guemri.mahmoud.dev@gmail.com", "admin",
 				new Date(), true, Arrays.asList(roleService.findByRole("ROLE_ADMIN")));
 		Profile profile =new Profile(1L, admin);
 
