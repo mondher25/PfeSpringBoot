@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 public class Attachement implements Serializable{
 
 
-	private static final long serialVersionUID = 551449511222L;
-
+	private static final long serialVersionUID = 3044905065337929542L;
 	@Id @GeneratedValue
 	private Long id;
 	private String file;
